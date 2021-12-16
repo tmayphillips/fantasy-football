@@ -1,0 +1,10 @@
+<div id = 'search-component'>
+    <label for='search-box'>Player Search</label>
+    <input #inputText type="text" class="form-control mb-4" placeholder="Search" [(ngModel)]="query" id="listSearch">
+    <ul *ngIf='query' class='search-result'>
+        <li *ngFor='let player of players | searchFilter: query'>
+            <a [routerLink]="['/details', player.PlayerID]">{{player.FirstName}} {{player.LastName}} {{player.PlayerID}}</a>
+        </li>
+    </ul>
+</div>
+
