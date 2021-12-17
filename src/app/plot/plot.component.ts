@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { PlayerStatsService } from '../stats.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Player } from '../player';
@@ -9,41 +9,46 @@ import { Player } from '../player';
   styleUrls: ['./plot.component.scss']
 })
 export class PlotComponent implements OnInit {
-  playerID:number = 0
-  player:Player | undefined;
+  @Input() playerID:number = 0
+  @Input() type:string = 'FantasyPointsYahoo'
+
+  ngOnChanges(changes:SimpleChanges) {
+    this.playerStats = []
+    this.getSeason()
+  }
+  player:Player = new Player(0,'','','','',0)
   season:number = 0;
   week:number = 0;
   playerStats:any[] = [];
   weeks:string[] = [];
   fantasyPoints:number[] = [];
-
+  title:string = 'Fantasy Points by Week'
 
   constructor(
     private playerStatsService:PlayerStatsService,
     private router: Router,
     public route: ActivatedRoute
-
   ) { }
 
   public graph = {
     data: [{
       x: this.weeks,
       y: this.fantasyPoints,
-      type: 'scatter'
+      type: 'scatter',
+      mode: 'lines+markers', 
+      marker: {color: 'black'}
     }],
     layout: {
-      title: 'Fantasy Points by Week'
+      title: this.title,
+      paper_bgcolor: 'transparent',
+      plot_bgcolor: 'transparent',
+      // gridColor: 'transparent'
     }
   }
-
-
+  
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    this.playerID = Number(routeParams.get('playerID'));
     this.getWeek();
     this.getSeason();
-    
-    
   }
 
   getSeason() {
@@ -69,18 +74,36 @@ export class PlotComponent implements OnInit {
       .then((resp:any) => {
         this.playerStats.push(resp)
         this.getData()
-      })
+      }).catch(console.log)
   }
 
   getData() {
     let playerStats:any[] = this.playerStats[0]
+    this.weeks = [];
+    this.fantasyPoints = [];
+    let tempWeek:string[] = []
+    let tempData:number[] = []
+    let type:string = this.type
     playerStats.forEach(element => {
-      this.weeks = [...this.weeks, element.Week]
-      this.fantasyPoints = [...this.fantasyPoints, element.FantasyPointsYahoo]
+      tempWeek.unshift(`Wk ${element.Week}`);
+      tempData.unshift(element[type]);
     })
-    console.log(this.fantasyPoints, this.weeks)
+    this.weeks = tempWeek;
+    this.fantasyPoints = tempData;
+    this.graph = {
+      data: [{
+        x: this.weeks,
+        y: this.fantasyPoints,
+        type: 'scatter',
+        mode: 'lines+markers', 
+        marker: {color: 'black'}
+      }],
+      layout: {
+        title: this.title,
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
+        // gridColor: 'transparent'
+      }
+    }
   }
-
-
-  
 }

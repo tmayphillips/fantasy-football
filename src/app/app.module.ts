@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule} from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 import * as PlotlyJS from 'plotly.js-dist-min';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -12,7 +13,9 @@ import { AppComponent } from './app.component';
 import { PlotComponent } from './plot/plot.component';
 import { PlayerSearchComponent } from './player-search/player-search.component';
 import { SearchFilterPipe } from './search-filter.pipe';
-import { PlayerInfoComponent } from './player-info/player-info.component'
+import { PlayerInfoComponent } from './player-info/player-info.component';
+import { SanitizeHtmlPipe } from './sanitize-html.pipe'
+
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -22,7 +25,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PlotComponent,
     PlayerSearchComponent,
     SearchFilterPipe,
-    PlayerInfoComponent
+    PlayerInfoComponent,
+    SanitizeHtmlPipe
   ],
   imports: [
     BrowserModule,
@@ -30,7 +34,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     CommonModule,
     HttpClientModule,
     PlotlyModule, 
-    FormsModule
+    FormsModule,
+    ClickOutsideModule
   ],
   providers: [],
   bootstrap: [AppComponent]

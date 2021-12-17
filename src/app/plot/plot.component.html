@@ -1,8 +1,1 @@
-
-
-<h2>Player Details</h2>
-<p>{{ playerID }}</p>
-<!-- <div *ngIf="player"> -->
-  <!-- <h3>{{ player.firstName }}</h3> -->
-  <plotly-plot [data]="graph.data" [layout]="graph.layout"></plotly-plot>
-<!-- </div> -->
+<plotly-plot #plotlyPlot [data]="graph.data" [layout]="graph.layout"></plotly-plot>

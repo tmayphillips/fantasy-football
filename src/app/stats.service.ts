@@ -1,9 +1,5 @@
-import { getNumberOfCurrencyDigits } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators'
-import { Player } from './player';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +9,6 @@ export class PlayerStatsService {
     API_KEY = '72b3ff18e83e404bb5b7c04990249801';
     playerArr:string[] = []
     timeframe:string = ''
-
-    
     playersUrl = `https://api.sportsdata.io/v3/nfl/scores/json/Players?key=${this.API_KEY}`
     currentUrl = `https://api.sportsdata.io/v3/nfl/scores/json/Current`
     statsUrl = `https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsBySeason/`
@@ -48,8 +42,6 @@ export class PlayerStatsService {
     }
 
     public getPlayerStats(season:number, id:number) {
-        console.log('inside getPlayerStats')
-        console.log(season, id)
         return new Promise((resolve,reject) => {
             this.http.get(`${this.statsUrl}/${season}/${id}/all?key=${this.API_KEY}`).subscribe(
                 (res) => {
