@@ -13,9 +13,6 @@ import { AppComponent } from './app.component';
 import { PlotComponent } from './plot/plot.component';
 import { PlayerSearchComponent } from './player-search/player-search.component';
 import { SearchFilterPipe } from './search-filter.pipe';
-import { PlayerInfoComponent } from './player-info/player-info.component';
-import { SanitizeHtmlPipe } from './sanitize-html.pipe'
-
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -24,9 +21,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     AppComponent,
     PlotComponent,
     PlayerSearchComponent,
-    SearchFilterPipe,
-    PlayerInfoComponent,
-    SanitizeHtmlPipe
+    SearchFilterPipe
   ],
   imports: [
     BrowserModule,
