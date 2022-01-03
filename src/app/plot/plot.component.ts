@@ -73,6 +73,7 @@ export class PlotComponent implements OnInit {
       .getPlayerStats(this.season, this.playerID)
       .then((resp:any) => {
         this.playerStats.push(resp)
+        console.log(this.playerStats)
         this.getData()
       }).catch(console.log)
   }
